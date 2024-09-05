@@ -1,0 +1,21 @@
+.container {
+  padding: 20px;
+  display: flex;
+  gap: 24px;
+  font-size: 18px;
+  font-weight: bold;
+  border-bottom: 2px solid black; /* Чорний бордер внизу */
+  box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.5); /* Невелика тінь */
+}
+
+.navLink {
+  text-decoration: none;
+}
+
+.navLink:hover {
+  color: orange;
+}
+
+.active {
+  color: orange;
+}

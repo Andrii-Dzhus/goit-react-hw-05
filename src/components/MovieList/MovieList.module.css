@@ -1,0 +1,15 @@
+.container {
+  padding: 20px;
+}
+
+.movieList {
+  list-style-type: none;
+  padding: 0;
+  gap: 20px;
+}
+.movieItem {
+  display: flex;
+
+  overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
