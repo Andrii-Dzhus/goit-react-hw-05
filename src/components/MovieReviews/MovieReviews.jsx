@@ -1,4 +1,8 @@
-export default function MovieReviews({ reviews }) {
+import { useOutletContext } from "react-router-dom";
+
+export default function MovieReviews() {
+  const { reviews } = useOutletContext();
+
   return (
     <div>
       <h2>Reviews</h2>

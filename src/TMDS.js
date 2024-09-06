@@ -28,7 +28,7 @@ export const searchMovies = async query => {
       Authorization: `Bearer ${API_TOKEN}`,
     },
   });
-  return response.date.results;
+  return response.data.results;
 };
 
 export const fetchMovieDetails = async movieId => {

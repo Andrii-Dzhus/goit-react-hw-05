@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams, Link, useLocation } from "react-router-dom";
+import { useParams, Link, useLocation, Outlet } from "react-router-dom";
 import {
   fetchMovieDetails,
   fetchMovieCast,
@@ -7,6 +7,7 @@ import {
 } from "../../TMDS";
 import MovieCast from "../../components/MovieCast/MovieCast";
 import MovieReviews from "../../components/MovieReviews/MovieReviews";
+import css from "./MovieDetailsPage.module.css";
 
 export default function MovieDetailsPage() {
   const { movieId } = useParams();
@@ -37,15 +38,23 @@ export default function MovieDetailsPage() {
     <div>
       {movie && (
         <div>
+          <Link to={location.state?.from || "/movies"}>Go back</Link>
           <h1>{movie.title}</h1>
           <img
+            className={css.poster}
             src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
             alt={movie.title}
           />
           <p>{movie.overview}</p>
-          <Link to={location.state?.from || "/movies"}>Go back</Link>
-          <MovieCast cast={cast} />
-          <MovieReviews reviews={reviews} />
+          <ul>
+            <li>
+              <Link to="cast">Cast </Link>
+            </li>
+            <li>
+              <Link to="reviews">Reviews </Link>
+            </li>
+          </ul>
+          <Outlet context={{ cast, reviews }} />
         </div>
       )}
     </div>

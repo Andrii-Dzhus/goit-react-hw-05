@@ -16,5 +16,10 @@ export default function HomePage() {
     };
     getMovies();
   }, []);
-  return <MovieList movies={movies} />;
+  return (
+    <div>
+      <h1>Trending today</h1>
+      <MovieList movies={movies} />;
+    </div>
+  );
 }

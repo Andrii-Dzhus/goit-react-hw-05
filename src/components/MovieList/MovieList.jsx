@@ -8,7 +8,6 @@ export default function MovieList({ movies }) {
 
   return (
     <div className={css.container}>
-      <h2>Trending today</h2>
       <ul className={css.movieList}>
         {movies.map(movie => (
           <li key={movie.id} className={css.movieItem}>
