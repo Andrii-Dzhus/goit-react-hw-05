@@ -30,3 +30,30 @@ export const searchMovies = async query => {
   });
   return response.date.results;
 };
+
+export const fetchMovieDetails = async movieId => {
+  const response = await axios.get(`${BASE_URL}/movie/${movieId}`, {
+    headers: {
+      Authorization: `Bearer ${API_TOKEN}`,
+    },
+  });
+  return response.data;
+};
+
+export const fetchMovieCast = async movieId => {
+  const response = await axios.get(`${BASE_URL}/movie/${movieId}/credits`, {
+    headers: {
+      Authorization: `Bearer ${API_TOKEN}`,
+    },
+  });
+  return response.data.cast;
+};
+
+export const fetchMovieReviews = async movieId => {
+  const response = await axios.get(`${BASE_URL}/movie/${movieId}/reviews`, {
+    headers: {
+      Authorization: `Bearer ${API_TOKEN}`,
+    },
+  });
+  return response.data.results;
+};

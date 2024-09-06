@@ -24,7 +24,7 @@ export default function MoviesPage() {
         placeholder="Search movies..."
       />
       <button onClick={handleSearch}>Search</button>
-      <MovieList />
+      <MovieList movies={movies} />
     </div>
   );
 }
