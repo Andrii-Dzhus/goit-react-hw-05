@@ -5,8 +5,6 @@ import {
   fetchMovieCast,
   fetchMovieReviews,
 } from "../../TMDS";
-import MovieCast from "../../components/MovieCast/MovieCast";
-import MovieReviews from "../../components/MovieReviews/MovieReviews";
 import css from "./MovieDetailsPage.module.css";
 
 export default function MovieDetailsPage() {
@@ -35,7 +33,7 @@ export default function MovieDetailsPage() {
   }, [movieId]);
 
   return (
-    <div>
+    <div className={css.con}>
       {movie && (
         <div>
           <Link to={location.state?.from || "/movies"}>Go back</Link>
@@ -46,6 +44,19 @@ export default function MovieDetailsPage() {
             alt={movie.title}
           />
           <p>{movie.overview}</p>
+
+          {movie.genres && movie.genres.length > 0 && (
+            <div>
+              <h3>Genres:</h3>
+              <ul className={css.genresList}>
+                {movie.genres.map(genre => (
+                  <li key={genre.id} className={css.genreItem}>
+                    {genre.name}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
           <ul>
             <li>
               <Link to="cast">Cast </Link>

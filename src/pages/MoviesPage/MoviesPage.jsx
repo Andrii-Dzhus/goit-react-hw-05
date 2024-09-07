@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { searchMovies } from "../../TMDS";
 import MovieList from "../../components/MovieList/MovieList";
-
+import css from "./MoviesPage.module.css";
 export default function MoviesPage() {
   const [query, setQuery] = useState("");
   const [movies, setMovies] = useState([]);
@@ -15,12 +15,19 @@ export default function MoviesPage() {
     }
   };
 
+  const handleKeyPress = e => {
+    if (e.key === "Enter") {
+      handleSearch();
+    }
+  };
+
   return (
-    <div>
+    <div className={css.con}>
       <input
         type="text"
         value={query}
         onChange={e => setQuery(e.target.value)}
+        onKeyDown={handleKeyPress}
         placeholder="Search movies..."
       />
       <button onClick={handleSearch}>Search</button>
