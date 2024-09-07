@@ -3,10 +3,6 @@ import { useSearchParams } from "react-router-dom";
 import { searchMovies } from "../../TMDS";
 import MovieList from "../../components/MovieList/MovieList";
 import css from "./MoviesPage.module.css";
-<<<<<<< HEAD
-
-=======
->>>>>>> 275db0dd0aee92f31edf48b209116845043182d1
 export default function MoviesPage() {
   const [movies, setMovies] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -41,22 +37,12 @@ export default function MoviesPage() {
     }
   };
 
-  const handleKeyPress = e => {
-    if (e.key === "Enter") {
-      handleSearch();
-    }
-  };
-
   return (
     <div className={css.con}>
       <input
         type="text"
         value={query}
-<<<<<<< HEAD
         onChange={e => setSearchParams({ query: e.target.value, page: 1 })}
-=======
-        onChange={e => setQuery(e.target.value)}
->>>>>>> 275db0dd0aee92f31edf48b209116845043182d1
         onKeyDown={handleKeyPress}
         placeholder="Search movies..."
       />
