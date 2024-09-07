@@ -32,11 +32,19 @@ export default function MovieDetailsPage() {
     getMovieDetails();
   }, [movieId]);
 
+  const handleGoBack = () => {
+    if (location.state?.from) {
+      window.history.back(); // Повернутися до попередньої сторінки
+    } else {
+      window.location.href = "/movies"; // Повернутися на сторінку фільмів
+    }
+  };
+
   return (
     <div className={css.con}>
       {movie && (
         <div>
-          <Link to={location.state?.from || "/movies"}>Go back</Link>
+          <button onClick={handleGoBack}>Go back</button>
           <h1>{movie.title}</h1>
           <img
             className={css.poster}

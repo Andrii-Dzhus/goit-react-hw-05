@@ -11,7 +11,10 @@ export default function MovieList({ movies }) {
       <ul className={css.movieList}>
         {movies.map(movie => (
           <li key={movie.id} className={css.movieItem}>
-            <Link to={`/movies/${movie.id}`}>
+            <Link
+              to={`/movies/${movie.id}`}
+              state={{ from: window.location.pathname }}
+            >
               <p>{movie.title}</p>
             </Link>
           </li>
