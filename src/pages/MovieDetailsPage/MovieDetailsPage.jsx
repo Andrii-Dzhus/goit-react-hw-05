@@ -34,9 +34,9 @@ export default function MovieDetailsPage() {
 
   const handleGoBack = () => {
     if (location.state?.from) {
-      window.history.back(); // Повернутися до попередньої сторінки
+      window.history.back();
     } else {
-      window.location.href = "/movies"; // Повернутися на сторінку фільмів
+      window.location.href = "/movies";
     }
   };
 

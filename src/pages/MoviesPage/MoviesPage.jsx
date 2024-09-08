@@ -3,11 +3,13 @@ import { useSearchParams } from "react-router-dom";
 import { searchMovies } from "../../TMDS";
 import MovieList from "../../components/MovieList/MovieList";
 import css from "./MoviesPage.module.css";
+
 export default function MoviesPage() {
   const [movies, setMovies] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
+  const [noResultsMessage, setNoResultsMessage] = useState("");
+  const [inputValue, setInputValue] = useState(searchParams.get("query") || "");
 
-  // Отримуємо поточний запит з URL
   const query = searchParams.get("query") || "";
   const page = searchParams.get("page") || 1;
 
@@ -16,9 +18,15 @@ export default function MoviesPage() {
       if (query) {
         try {
           const results = await searchMovies(query, page);
+          if (results.length === 0) {
+            setNoResultsMessage("No movies found");
+          } else {
+            setNoResultsMessage("");
+          }
           setMovies(results);
         } catch (error) {
           console.error("Failed to search movies:", error);
+          setNoResultsMessage("An error occurred while fetching movies.");
         }
       }
     };
@@ -26,9 +34,12 @@ export default function MoviesPage() {
     fetchMovies();
   }, [query, page]);
 
+  useEffect(() => {
+    setInputValue(query);
+  }, [query]);
+
   const handleSearch = () => {
-    // Оновлюємо URL, додаючи query та page
-    setSearchParams({ query, page: 1 });
+    setSearchParams({ query: inputValue, page: 1 });
   };
 
   const handleKeyPress = e => {
@@ -41,12 +52,13 @@ export default function MoviesPage() {
     <div className={css.con}>
       <input
         type="text"
-        value={query}
-        onChange={e => setSearchParams({ query: e.target.value, page: 1 })}
+        value={inputValue}
+        onChange={e => setInputValue(e.target.value)}
         onKeyDown={handleKeyPress}
         placeholder="Search movies..."
       />
       <button onClick={handleSearch}>Search</button>
+      {noResultsMessage && <p className={css.noResults}>{noResultsMessage}</p>}
       <MovieList movies={movies} />
     </div>
   );

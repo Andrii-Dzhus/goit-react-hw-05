@@ -3,7 +3,9 @@ import css from "./MovieCast.module.css";
 
 export default function MovieCast() {
   const { cast } = useOutletContext();
-
+  if (!cast || cast.length === 0) {
+    return <p className={css.message}>No cast information available.</p>;
+  }
   return (
     <div>
       <ul className={css.castList}>

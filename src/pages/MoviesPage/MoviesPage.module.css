@@ -1,3 +1,9 @@
 .con {
   padding: 16px;
 }
+
+.noResults {
+  color: red;
+  font-weight: bold;
+  margin-top: 10px;
+}
