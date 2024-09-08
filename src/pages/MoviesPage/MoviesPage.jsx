@@ -24,48 +24,31 @@ export default function MoviesPage() {
             setNoResultsMessage("");
           }
           setMovies(results);
-          // Save the search results in session storage
-          sessionStorage.setItem("searchResults", JSON.stringify(results));
         } catch (error) {
           console.error("Failed to search movies:", error);
           setNoResultsMessage("An error occurred while fetching movies.");
         }
       }
     };
-
-    // Restore the search results from session storage
-    const savedResults = sessionStorage.getItem("searchResults");
-    if (savedResults) {
-      setMovies(JSON.parse(savedResults));
-    } else {
-      fetchMovies();
-    }
+    fetchMovies();
   }, [query, page]);
 
-  useEffect(() => {
-    setInputValue(query);
-  }, [query]);
-
-  const handleSearch = () => {
+  const handleSearch = e => {
+    e.preventDefault();
     setSearchParams({ query: inputValue, page: 1 });
-  };
-
-  const handleKeyPress = e => {
-    if (e.key === "Enter") {
-      handleSearch();
-    }
   };
 
   return (
     <div className={css.con}>
-      <input
-        type="text"
-        value={inputValue}
-        onChange={e => setInputValue(e.target.value)}
-        onKeyDown={handleKeyPress}
-        placeholder="Search movies..."
-      />
-      <button onClick={handleSearch}>Search</button>
+      <form onSubmit={handleSearch}>
+        <input
+          type="text"
+          value={inputValue}
+          onChange={e => setInputValue(e.target.value)}
+          placeholder="Search movies..."
+        />
+        <button type="submit">Search</button>
+      </form>
       {noResultsMessage && <p className={css.noResults}>{noResultsMessage}</p>}
       <MovieList movies={movies} />
     </div>

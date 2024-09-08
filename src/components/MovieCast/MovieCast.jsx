@@ -1,11 +1,29 @@
-import { useOutletContext } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { fetchMovieCast } from "../../TMDS";
 import css from "./MovieCast.module.css";
 
 export default function MovieCast() {
-  const { cast } = useOutletContext();
+  const { movieId } = useParams();
+  const [cast, setCast] = useState([]);
+
+  useEffect(() => {
+    const getCast = async () => {
+      try {
+        const movieCast = await fetchMovieCast(movieId);
+        setCast(movieCast);
+      } catch (error) {
+        console.error("Failed to fetch cast:", error);
+      }
+    };
+
+    getCast();
+  }, [movieId]);
+
   if (!cast || cast.length === 0) {
     return <p className={css.message}>No cast information available.</p>;
   }
+
   return (
     <div>
       <ul className={css.castList}>
