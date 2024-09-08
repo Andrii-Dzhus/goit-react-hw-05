@@ -1,5 +1,11 @@
-import { useEffect, useState } from "react";
-import { useParams, Link, useLocation, Outlet } from "react-router-dom";
+import { useRef, useEffect, useState } from "react";
+import {
+  useParams,
+  Link,
+  Outlet,
+  useNavigate,
+  useLocation,
+} from "react-router-dom";
 import {
   fetchMovieDetails,
   fetchMovieCast,
@@ -9,10 +15,11 @@ import css from "./MovieDetailsPage.module.css";
 
 export default function MovieDetailsPage() {
   const { movieId } = useParams();
-  const location = useLocation();
+  const navigate = useNavigate();
   const [movie, setMovie] = useState(null);
   const [cast, setCast] = useState([]);
   const [reviews, setReviews] = useState([]);
+  const location = useLocation();
 
   useEffect(() => {
     const getMovieDetails = async () => {
@@ -32,19 +39,14 @@ export default function MovieDetailsPage() {
     getMovieDetails();
   }, [movieId]);
 
-  const handleGoBack = () => {
-    if (location.state?.from) {
-      window.history.back();
-    } else {
-      window.location.href = "/movies";
-    }
-  };
+  const backLinkHref = useRef(location.state?.from ?? "/movies");
+  const onClickBack = () => navigate(backLinkHref.current);
 
   return (
     <div className={css.con}>
       {movie && (
         <div>
-          <button onClick={handleGoBack}>Go back</button>
+          <button onClick={onClickBack}>Go back</button>
           <h1>{movie.title}</h1>
           <img
             className={css.poster}
@@ -67,10 +69,10 @@ export default function MovieDetailsPage() {
           )}
           <ul>
             <li>
-              <Link to="cast">Cast </Link>
+              <Link to="cast">Cast</Link>
             </li>
             <li>
-              <Link to="reviews">Reviews </Link>
+              <Link to="reviews">Reviews</Link>
             </li>
           </ul>
           <Outlet context={{ cast, reviews }} />

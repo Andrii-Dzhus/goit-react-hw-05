@@ -7,8 +7,8 @@ import css from "./MoviesPage.module.css";
 export default function MoviesPage() {
   const [movies, setMovies] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
-  const [noResultsMessage, setNoResultsMessage] = useState("");
   const [inputValue, setInputValue] = useState(searchParams.get("query") || "");
+  const [noResultsMessage, setNoResultsMessage] = useState("");
 
   const query = searchParams.get("query") || "";
   const page = searchParams.get("page") || 1;
@@ -24,6 +24,8 @@ export default function MoviesPage() {
             setNoResultsMessage("");
           }
           setMovies(results);
+          // Save the search results in session storage
+          sessionStorage.setItem("searchResults", JSON.stringify(results));
         } catch (error) {
           console.error("Failed to search movies:", error);
           setNoResultsMessage("An error occurred while fetching movies.");
@@ -31,7 +33,13 @@ export default function MoviesPage() {
       }
     };
 
-    fetchMovies();
+    // Restore the search results from session storage
+    const savedResults = sessionStorage.getItem("searchResults");
+    if (savedResults) {
+      setMovies(JSON.parse(savedResults));
+    } else {
+      fetchMovies();
+    }
   }, [query, page]);
 
   useEffect(() => {
